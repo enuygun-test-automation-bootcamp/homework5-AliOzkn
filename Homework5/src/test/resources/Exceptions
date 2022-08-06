@@ -1,0 +1,166 @@
+These are most common exceptions in java.
+
+1) CHECKED EXCEPTIONS
+These are the exceptions that can be detected by the compiler at the time of execution of the program, and warning messages are displayed.
+
+1.1) FileNotFoundException
+A method throws a FileNotFoundException when any input/output operation fails. Example:
+try {
+    new FileReader(new File("/invalid/file/location"));
+} catch (FileNotFoundException e) {
+    LOGGER.info("FileNotFoundException caught!");
+}
+
+1.2) MalformedURLException
+A method throws a MalformedURLException when if our URL's are invalid. Example:
+try {
+    new URL("malformedurl");
+} catch (MalformedURLException e) {
+    LOGGER.error("MalformedURLException caught!");
+}
+
+1.3) ParseException
+Java uses text parsing to create an object based on a given String. If parsing causes an error, it throws a ParseException. Example;
+we could represent Date in different ways e.g. dd/mm/yyyy or dd,mm,yyyy, but try to parse a string with a different format:
+try {
+    new SimpleDateFormat("MM, dd, yyyy").parse("invalid-date");
+} catch (ParseException e) {
+    LOGGER.error("ParseException caught!");
+}
+
+1.4) InterruptedException
+An InterruptedException is thrown when a thread is interrupted while it's waiting, sleeping, or otherwise occupied.
+A thread can interrupt another thread by calling another thread's interrupt() method.
+The purpose of the interrupt system is to provide a well-defined framework for allowing threads to interrupt tasks (in other threads. Example:
+
+class ChildThread extends Thread {
+
+    public void run() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            LOGGER.error("InterruptedException caught!");
+        }
+    }
+}
+
+public class MainThread {
+
+    public static void main(String[] args)
+      throws InterruptedException {
+        ChildThread childThread = new ChildThread();
+        childThread.start();
+        childThread.interrupt();
+    }
+}
+The main thread starts the child thread and interrupts it. The child thread starts and calls sleep(). This scenario results in an InterruptedException.
+
+1.5) ClassNotFoundException
+ClassNotFoundException is a checked exception which occurs when an application tries to load a class and can not find its definition on the classpath.
+
+
+2) UNCHECKED EXCEPTIONS
+These are the exceptions that are missed out from the compiler check giving birth to abrupt flow.No warning messages are displayed as these exceptions are not detected by the compiler.
+
+2.1) NullPointerException
+Null is a special value used in Java. It is mainly used to indicate that no value is assigned to a reference variable.
+NullPointerException is thrown when a program attempts to use an object reference that has the null value.
+Example:
+String strObj = null;
+strObj.equals("Hello World"); // throws NullPointerException.
+
+2.2) ArrayIndexOutOfBoundsException
+if a piece of code tries to access an illegal index of an array, the respective method throws an ArrayIndexOutOfBoundException.
+Example:
+// Size of array is 10
+        // Indexes ranging [00 - 09]
+        int[] a = new int[10];
+
+        // Case 1: Custom index within array size
+        // Valid
+        System.out.println(a[0]);
+
+        // Case 2: Index greater than the size of the array
+        // Invalid
+        // ArrayIndexOutOfBoundsException
+        System.out.println(a[100]);
+
+        // ArrayIndexOutOfBoundsException
+        System.out.println(a[-100]);
+    }
+
+2.3) NumberFormatException
+This exception is thrown when forcefully string is been converted to numeric value but the format of the input string is not supported.
+
+Example:
+
+String str = "100ABCD";
+int x = Integer.parseInt(str); // Throws NumberFormatException
+int y = Integer.valueOf(str); //Throws NumberFormatException
+
+2.4) ArithmeticException
+When a program evaluates an arithmetic operation and it results in some exceptional condition, it throws ArithmeticException.
+In addition, ArithmeticException applies to only int and long data types.
+
+Example: if we try to divide an integer by zero, we get an ArithmeticException:
+
+int illegalOperation = 30/0; // Throws ArithmeticException
+
+2.5) ClassCastException
+Java allows typecasting between the objects in order to support inheritance and polymorphism. We can either upcast an object or downcast it.
+In upcasting, we cast an object to its supertype. And in downcasting, we cast an object to one of its subtypes.
+However, at runtime, if the code attempts to downcast an object to a subtype of which it isn't an instance, the method throws a ClassCastException.
+
+Example:
+
+class Animal {}
+class Dog extends Animal {}
+class Lion extends Animal {}
+
+Animal animal = new Lion(); // At runtime the instance is Lion
+Dog tommy = (Dog) animal; // Throws ClassCastException
+
+2.6) IllegalArgumentException
+A method throws an IllegalArgumentException if we call it with some illegal or inappropriate arguments.
+For instance, the sleep() method of the Thread class expects positive time and we pass a negative time interval as an argument. This results in IllegalArgumentException:
+
+Thread.currentThread().sleep(-10000); // Throws IllegalArgumentException
+
+2.7) IllegalStateException
+Every Java object has a state (instance variables) and some behavior (methods).
+IllegalStateException signals that a method's been invoked at an illegal or inappropriate time.
+
+Example:
+
+//Initialized with index at -1
+Iterator<Integer> intListIterator = new ArrayList<>().iterator();
+
+intListIterator.remove(); // IllegalStateException
+
+2.8) StackOverFlowError
+The main cause of the StackOverflowError is that we haven’t provided the proper terminating condition to our recursive function or template, which means it will turn into an infinite loop.
+
+Example:
+
+    // Method1()
+    public static void methodOne()
+    {
+        // Defining Method2() in Method1()
+        methodTwo();
+    }
+
+    // Method2()
+    public static void methodTwo()
+    {
+        // Calling method1 in methos2()
+        methodOne();
+    }
+
+    // Main driver method
+    public static void main(String[] args)
+    {
+
+        // Calling method1() in main()
+        methodOne();
+    }
+
