@@ -4,7 +4,7 @@ Contact Manager uygulamasi icin derste belirtilen testler yazilacak.
 Java Exception lar arastirilip, yazilan kodlarda kullanilacak.
 
 
-1) Contact Manager uygulamasında yeni bir kişi kaydetmek için isim, telefon numarası (Ev, iş, mobil ve diğer opsiyonları şeklinde bulunmaktadır.),
+1) Contact Manager uygulamasında yeni bir kişi kaydetmek için isim, telefon numarası (Ev, iş, mobil ve diğer şeklinde opsiyonları  bulunmaktadır.),
 ve email (Ev, iş, mobil ve diğer şeklinde opsiyonları bulunmaktadır.) bilgilerinin girilmesi istenmektedir.
 
 2) Yeni bir kişi kaydederken yapılması gereken testlerin tamamı features klasörü altındaki contactmanagersmoke.feature dosyasında yazılıdır.
